@@ -1,0 +1,26 @@
+{
+  "name": "employee_traker",
+  "version": "1.0.0",
+  "description": "Employee Tracker is a mySQL database with a command line prompt-based interface. It allows managers to view departments, roles, and employees in their company so that they can plan and organize their business.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RufatEskendarov/Employee_Traker.git"
+  },
+  "author": "Rufat Eskendarov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RufatEskendarov/Employee_Traker/issues"
+  },
+  "homepage": "https://github.com/RufatEskendarov/Employee_Traker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^16.0.3",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.1.0"
+  }
+}
