@@ -1,4 +1,4 @@
-# Employee_Traker
+# Employee_Tracker
 
 ## Table of Contents
 
@@ -44,6 +44,8 @@ Just instal NPM package run in terminal "npm install"
 ## Usage
 
 After NPM installation type in terminal "node .\server.js"
+
+[How it works](https://drive.google.com/file/d/1QSD8E6hcHNBfpD-c9l1YdBN9hm5dmLCc/view)
 
 ## Tests
 

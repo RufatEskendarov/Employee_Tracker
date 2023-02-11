@@ -41,7 +41,7 @@ const updateEmployee = async function () {
     ])
     .then((res) => {
       db.query(
-        `UPDATE employees SET manager_id = ${res.managerId} WHERE first_name = "${res.firstName}" AND last_name = "${res.lastName}"`
+        `UPDATE employees SET manager_id = ${res.managerId} WHERE first_name = "${res.firstName}" AND last_name = "${res.lastName}" LIMIT 1`
       );
     });
 };
