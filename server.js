@@ -1,14 +1,51 @@
 const inquirer = require("inquirer");
-const cTable = require("console.table");
 const db = require("./config/connection.js");
+const cTable = require("console.table");
 
-const departments = require("./controllers/departments.js");
+const {
+  allDepartments,
+  addDepartment,
+  deleteDepartment,
+} = require("./controllers/departments");
 
-const roles = require("./controllers/roles.js");
-const employees = require("./controllers/employees.js");
+const { allRoles, addRole, deleteRole } = require("./controllers/roles.js");
+const { allEmployees } = require("./controllers/employees.js");
 
-function appStarter() {
-  const userResponses = [
+const printAllEmployees = async () => {
+  const data = await allEmployees();
+  console.table("\nEMPLOYEES", data[0]);
+};
+
+const printAllRoles = async () => {
+  const data = await allRoles();
+  console.table("\nPOSITIONS", data[0]);
+};
+const printAllDepartments = async () => {
+  const data = await allDepartments();
+  console.table("\nDEPARTMENTS", data[0]);
+};
+
+const addNewDepartment = async () => {
+  await addDepartment();
+  await printAllDepartments();
+};
+const addNewRole = async () => {
+  await addRole();
+  await printAllRoles();
+};
+
+const delDepartment = async () => {
+  await deleteDepartment();
+  await printAllDepartments();
+};
+
+const delRole = async () => {
+  await deleteRole();
+  await printAllRoles();
+};
+
+const appStarter = () => {
+  const userResponse = [
     {
       type: "list",
       name: "userChoice",
@@ -29,20 +66,38 @@ function appStarter() {
     },
   ];
 
-  inquirer.prompt(userResponses).then((res) => {
-    console.log(res.userChoice);
+  inquirer.prompt(userResponse).then((res) => {
     switch (res.userChoice) {
       case "View All Employees":
-        employees.allEmployees();
+        printAllEmployees().then(() => appStarter());
+        // appStarter();
 
         break;
       case "View All Departments":
-        setTimeout(departments.allDepartments, 2500);
-        appStarter();
+        printAllDepartments().then(() => appStarter());
 
         break;
       case "View All Roles":
-        roles.allRoles();
+        printAllRoles().then(() => appStarter());
+
+        break;
+      case "Add Department":
+        addNewDepartment().then(() => appStarter());
+
+        break;
+      case "Add Role":
+        addNewRole().then(() => appStarter());
+
+        break;
+
+      case "Delete Department":
+        delDepartment().then(() => appStarter());
+
+        break;
+
+      case "Delete Role":
+        delRole().then(() => appStarter());
+
         break;
       case "Quit":
         db.end();
@@ -51,6 +106,6 @@ function appStarter() {
         db.end();
     }
   });
-}
+};
 
 appStarter();
