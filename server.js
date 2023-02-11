@@ -15,6 +15,7 @@ const {
   addEmployee,
   deleteEmployee,
   employeesByManager,
+  employeesByDep,
 } = require("./controllers/employees.js");
 
 const printAllEmployees = async () => {
@@ -25,6 +26,11 @@ const printAllEmployees = async () => {
 const printEmployeesByManager = async () => {
   const data = await employeesByManager();
   console.table("\nEMPLOYEES\nBY MANAGER", data[0]);
+};
+
+const printEmployeesByDep = async () => {
+  const data = await employeesByDep();
+  console.table("\nEMPLOYEES\nBY DEPARTMENT", data[0]);
 };
 
 const printAllRoles = async () => {
@@ -89,6 +95,7 @@ const appStarter = () => {
         "Update Employee Role",
         "Show Departmental Dudget",
         "View Employees by Manager",
+        "View Employees by Department",
         "Quit",
       ],
     },
@@ -141,6 +148,10 @@ const appStarter = () => {
         break;
       case "View Employees by Manager":
         printEmployeesByManager().then(() => appStarter());
+
+        break;
+      case "View Employees by Department":
+        printEmployeesByDep().then(() => appStarter());
 
         break;
       case "Quit":

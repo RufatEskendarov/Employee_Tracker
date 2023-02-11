@@ -13,6 +13,12 @@ const employeesByManager = function () {
   return db.promise().query(sqlQuery);
 };
 
+const employeesByDep = function () {
+  const sqlQuery =
+    'SELECT CONCAT(e.first_name," ", e.last_name) AS name, name AS department FROM employees e INNER JOIN roles ON e.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id ';
+  return db.promise().query(sqlQuery);
+};
+
 const addEmployee = async function () {
   await inquirer
     .prompt([
@@ -73,4 +79,5 @@ module.exports = {
   addEmployee,
   deleteEmployee,
   employeesByManager,
+  employeesByDep,
 };
