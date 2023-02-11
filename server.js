@@ -9,7 +9,11 @@ const {
 } = require("./controllers/departments");
 
 const { allRoles, addRole, deleteRole } = require("./controllers/roles.js");
-const { allEmployees } = require("./controllers/employees.js");
+const {
+  allEmployees,
+  addEmployee,
+  deleteEmployee,
+} = require("./controllers/employees.js");
 
 const printAllEmployees = async () => {
   const data = await allEmployees();
@@ -34,6 +38,11 @@ const addNewRole = async () => {
   await printAllRoles();
 };
 
+const addNewEmployee = async () => {
+  await addEmployee();
+  await printAllEmployees();
+};
+
 const delDepartment = async () => {
   await deleteDepartment();
   await printAllDepartments();
@@ -42,6 +51,11 @@ const delDepartment = async () => {
 const delRole = async () => {
   await deleteRole();
   await printAllRoles();
+};
+
+const delEmployee = async () => {
+  await deleteEmployee();
+  await printAllEmployees();
 };
 
 const appStarter = () => {
@@ -89,7 +103,10 @@ const appStarter = () => {
         addNewRole().then(() => appStarter());
 
         break;
+      case "Add Employee":
+        addNewEmployee().then(() => appStarter());
 
+        break;
       case "Delete Department":
         delDepartment().then(() => appStarter());
 
@@ -97,6 +114,10 @@ const appStarter = () => {
 
       case "Delete Role":
         delRole().then(() => appStarter());
+
+        break;
+      case "Delete Employee":
+        delEmployee().then(() => appStarter());
 
         break;
       case "Quit":
