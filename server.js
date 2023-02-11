@@ -6,6 +6,7 @@ const {
   allDepartments,
   addDepartment,
   deleteDepartment,
+  showBudget,
 } = require("./controllers/departments");
 
 const { allRoles, addRole, deleteRole } = require("./controllers/roles.js");
@@ -13,11 +14,17 @@ const {
   allEmployees,
   addEmployee,
   deleteEmployee,
+  employeesByManager,
 } = require("./controllers/employees.js");
 
 const printAllEmployees = async () => {
   const data = await allEmployees();
   console.table("\nEMPLOYEES", data[0]);
+};
+
+const printEmployeesByManager = async () => {
+  const data = await employeesByManager();
+  console.table("\nEMPLOYEES\nBY MANAGER", data[0]);
 };
 
 const printAllRoles = async () => {
@@ -27,6 +34,11 @@ const printAllRoles = async () => {
 const printAllDepartments = async () => {
   const data = await allDepartments();
   console.table("\nDEPARTMENTS", data[0]);
+};
+
+const printBudget = async () => {
+  const data = await showBudget();
+  console.table("\nDEPARTAMENTAL BUDGET", data[0]);
 };
 
 const addNewDepartment = async () => {
@@ -66,15 +78,17 @@ const appStarter = () => {
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "Add Employee",
-        "Update Employee Role",
         "View All Roles",
-        "Add Role",
         "View All Departments",
+        "Add Employee",
+        "Add Role",
         "Add Department",
-        "Delete Department",
-        "Delete Role",
         "Delete Employee",
+        "Delete Role",
+        "Delete Department",
+        "Update Employee Role",
+        "Show Departmental Dudget",
+        "View Employees by Manager",
         "Quit",
       ],
     },
@@ -118,6 +132,15 @@ const appStarter = () => {
         break;
       case "Delete Employee":
         delEmployee().then(() => appStarter());
+
+        break;
+
+      case "Show Departmental Dudget":
+        printBudget().then(() => appStarter());
+
+        break;
+      case "View Employees by Manager":
+        printEmployeesByManager().then(() => appStarter());
 
         break;
       case "Quit":

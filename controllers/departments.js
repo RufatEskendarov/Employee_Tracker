@@ -6,6 +6,12 @@ const allDepartments = () => {
   return db.promise().query(sql);
 };
 
+const showBudget = () => {
+  const sql =
+    "SELECT departments.name AS department, SUM(salary) AS budget FROM roles INNER JOIN departments ON roles.department_id = departments.id GROUP BY department_id";
+  return db.promise().query(sql);
+};
+
 const addDepartment = async function () {
   await inquirer
     .prompt([
@@ -39,4 +45,9 @@ const deleteDepartment = async function () {
     });
 };
 
-module.exports = { allDepartments, addDepartment, deleteDepartment };
+module.exports = {
+  allDepartments,
+  addDepartment,
+  deleteDepartment,
+  showBudget,
+};

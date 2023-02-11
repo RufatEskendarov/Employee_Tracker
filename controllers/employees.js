@@ -1,8 +1,15 @@
 const db = require("../config/connection.js");
+const inquirer = require("inquirer");
 
 const allEmployees = function () {
   const sqlQuery =
     'SELECT e.id,e.first_name, e.last_name, title, name AS department, salary, CONCAT(m.first_name," ", m.last_name) AS manager FROM employees e LEFT JOIN employees m on e.manager_id = m.id INNER JOIN roles ON e.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id ORDER BY e.id ASC';
+  return db.promise().query(sqlQuery);
+};
+
+const employeesByManager = function () {
+  const sqlQuery =
+    'SELECT CONCAT(e.first_name," ", e.last_name) AS employee, CONCAT(m.first_name," ", m.last_name) AS manager FROM employees e LEFT JOIN employees m on e.manager_id = m.id INNER JOIN roles ON e.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id ORDER BY e.id ASC';
   return db.promise().query(sqlQuery);
 };
 
@@ -33,7 +40,7 @@ const addEmployee = async function () {
     ])
     .then((res) => {
       db.query(
-        `INSERT INTO roles (first_name, last_name, role_id, manager_id) VALUES ("${res.firstName}", "${res.lastName}", ${res.roleId}, ${res.managerId})`
+        `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${res.firstName}", "${res.lastName}", ${res.roleId}, ${res.managerId})`
       );
     });
 };
@@ -56,9 +63,14 @@ const deleteEmployee = async function () {
     ])
     .then((res) => {
       db.query(
-        `DELETE FROM roles WHERE first_name = "${res.delEmpFirst}" AND last_name = "${res.delEmpLast}" LIMIT 1`
+        `DELETE FROM employees WHERE first_name = "${res.delEmpFirst}" AND last_name = "${res.delEmpLast}" LIMIT 1`
       );
     });
 };
 
-module.exports = { allEmployees, addEmployee, deleteEmployee };
+module.exports = {
+  allEmployees,
+  addEmployee,
+  deleteEmployee,
+  employeesByManager,
+};
