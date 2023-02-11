@@ -19,6 +19,33 @@ const employeesByDep = function () {
   return db.promise().query(sqlQuery);
 };
 
+const updateEmployee = async function () {
+  await inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "Please enter the first name of the new employee:",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "Please enter the last name of the new employee:",
+      },
+      {
+        type: "input",
+        name: "managerId",
+        message:
+          "Enter the Manager ID for this worker (If there is no manager or the worker is assigned as a manager, enter NULL):",
+      },
+    ])
+    .then((res) => {
+      db.query(
+        `UPDATE employees SET manager_id = ${res.managerId} WHERE first_name = "${res.firstName}" AND last_name = "${res.lastName}"`
+      );
+    });
+};
+
 const addEmployee = async function () {
   await inquirer
     .prompt([
@@ -80,4 +107,5 @@ module.exports = {
   deleteEmployee,
   employeesByManager,
   employeesByDep,
+  updateEmployee,
 };

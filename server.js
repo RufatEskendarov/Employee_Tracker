@@ -16,6 +16,7 @@ const {
   deleteEmployee,
   employeesByManager,
   employeesByDep,
+  updateEmployee,
 } = require("./controllers/employees.js");
 
 const printAllEmployees = async () => {
@@ -45,6 +46,11 @@ const printAllDepartments = async () => {
 const printBudget = async () => {
   const data = await showBudget();
   console.table("\nDEPARTAMENTAL BUDGET", data[0]);
+};
+
+const updateEmp = async () => {
+  await updateEmployee();
+  await printAllEmployees();
 };
 
 const addNewDepartment = async () => {
@@ -96,6 +102,7 @@ const appStarter = () => {
         "Show Departmental Dudget",
         "View Employees by Manager",
         "View Employees by Department",
+        "Update Employee Managers",
         "Quit",
       ],
     },
@@ -152,6 +159,10 @@ const appStarter = () => {
         break;
       case "View Employees by Department":
         printEmployeesByDep().then(() => appStarter());
+
+        break;
+      case "Update Employee Managers":
+        updateEmp().then(() => appStarter());
 
         break;
       case "Quit":
